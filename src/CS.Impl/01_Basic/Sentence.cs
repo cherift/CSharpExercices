@@ -6,7 +6,16 @@ namespace CS.Impl._01_Basic
     {
         public string Reverse(string sentence)
         {
-            throw new NotImplementedException();
+            string result = "";
+
+            String[] splited = sentence.Split(" ");
+
+            foreach (string s in splited)
+            {
+                result = s + " " + result;
+            }
+
+            return result.Trim(); 
         }
     }
 }

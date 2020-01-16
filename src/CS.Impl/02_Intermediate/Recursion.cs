@@ -7,7 +7,10 @@ namespace CS.Impl._02_Intermediate
     {
         public IEnumerable<int> GetNaturalNumbers(int n)
         {
-            throw new NotImplementedException();
+            if (n == 0)
+            {
+                 
+            }
         }
 
         private IEnumerable<int> GetNaturalNumbers(List<int> naturalNumbers, int current, int max)
