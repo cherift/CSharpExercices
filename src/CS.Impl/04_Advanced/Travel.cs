@@ -7,7 +7,33 @@ namespace CS.Impl._04_Advanced
     {
         public TravelRoadmap BuildTravelRoadmap(City initial, City destination)
         {
-            throw new NotImplementedException();
+            DistanceHelper distanceHelper = new DistanceHelper();
+
+            TravelRoadmap travelRoadmap = new TravelRoadmap();
+
+            List<TransportMode> modes = new List<TransportMode>();
+
+            if (distanceHelper.GetDistance(initial, destination) == Distance.Short)
+            {
+                modes.Add(TransportMode.Car);
+                modes.Add(TransportMode.Foot);
+                modes.Add(TransportMode.Train);
+            }
+            else if (distanceHelper.GetDistance(initial, destination) == Distance.Medium)
+            {
+                modes.Add(TransportMode.Car);
+                modes.Add(TransportMode.Train);
+                modes.Add(TransportMode.Plane);
+            }
+            else
+            {
+                modes.Add(TransportMode.Boat);
+                modes.Add(TransportMode.Plane);
+            }
+
+            travelRoadmap.Modes = modes;
+
+            return travelRoadmap;
         }
     }
 
@@ -36,7 +62,18 @@ namespace CS.Impl._04_Advanced
     {
         public Distance GetDistance(City initial, City destination)
         {
-            throw new NotImplementedException();
+            if (initial == destination)
+            {
+                return Distance.Short;
+            }
+            else if (initial == City.Barcelona && destination == City.London || destination == City.Barcelona && initial == City.London)
+            {
+                return Distance.Medium;
+            }
+            else
+            {
+                return Distance.Long;
+            }
         }
     }
 
