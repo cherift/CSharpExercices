@@ -9,27 +9,48 @@ namespace CS.Impl._03_Linq
     {
         public IEnumerable<string> FindStringsWhichStartsAndEndsWithSpecificCharacter(string startCharacter, string endCharacter, IEnumerable<string> strings)
         {
-            throw new NotImplementedException();
+            return from str in strings
+                   where str.StartsWith(startCharacter) && str.EndsWith(endCharacter)
+                   select str;
         }
 
         public IEnumerable<int> GetGreaterNumbers(int limit, IEnumerable<int> numbers)
         {
-            throw new NotImplementedException();
+            return from a in numbers
+                   where a > limit
+                   select a;
         }
 
         public IEnumerable<int> GetTopNRecords(int limit, IEnumerable<int> numbers)
         {
-            throw new NotImplementedException();
+            return (from num in numbers
+                    orderby num descending
+                    select num).Take(limit); 
         }
 
         public IDictionary<string, int> GetFileCountByExtension(IEnumerable<string> files)
         {
-            throw new NotImplementedException();
+            var groupedFiles = files.Select(file => Path.GetExtension(file).TrimStart('.').ToLower())
+                .GroupBy(group => group,
+                    (extension, extensionCount) => new { Extension = extension, Count = extensionCount.Count() });
+
+            return groupedFiles.ToDictionary(d => d.Extension, d => d.Count);
+
         }
 
         public IEnumerable<Tuple<string, string, int, double>> GetFinalReceipe(List<Item> items, List<Client> clients, List<Purchase> purchases)
         {
-            throw new NotImplementedException();
+            return from purchase in purchases
+                   join item in items
+                        on purchase.ItemId equals item.Id
+                   join client in clients
+                        on purchase.ClientId equals client.Id
+                   select Tuple.Create(
+                       client.Name,
+                       item.Label,
+                       purchase.Quantity,
+                       item.Price
+                   );
         }
     }
 

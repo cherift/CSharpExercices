@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CS.Impl._02_Intermediate;
 
 namespace CS.Impl._04_Advanced
 {
@@ -7,42 +8,63 @@ namespace CS.Impl._04_Advanced
     {
         public int[] GetPermutationPrimes(int upperBound)
         {
-            throw new NotImplementedException();
-        }
 
-        public int GetDigitLength(int n)
-        {
-            if (n == 0)
+            Recursion recusion = new Recursion();
+            List<int> result = new List<int>(); 
+
+            foreach (int val in recusion.GetNaturalNumbers(upperBound))
             {
-                return 0;
+                List<int> ints = new List<int>();
+                string valStr = val.ToString();
+
+                permute(valStr, 0, valStr.Length - 1, ints);
+
+                Boolean isPermutationPrime = true;
+
+                foreach (int elem in ints)
+                {
+                    isPermutationPrime = isPermutationPrime && recusion.IsPrime(elem);
+                }
+
+                if (isPermutationPrime)
+                {
+                    result.Add(val);
+                }
             }
-            else {
-                return 1 + GetDigitLength((int) n / 10);
+
+            return result.ToArray();
+        }
+
+        private void permute(string str, int l, int r, List<int> list)
+        {
+            if (l == r)
+            {
+                if (!list.Contains(Int16.Parse(str)))
+                {
+                    list.Add(Int16.Parse(str));
+                }
+            }
+            else
+            {
+                for (int i = l; i <= r; i++)
+                {
+                    str = swap(str, l, i);
+                    permute(str, l + 1, r, list);
+                    str = swap(str, l, i);
+                }
             }
         }
 
-        public List<int> GetListADigit(List<int> digits,  int n) {
-            if (n == 0) {
-                return digits;
-            }
-            else {
-                int pow = (int)Math.Pow(10, GetDigitLength(n));
-                int dig = n / pow;
-                digits.Add(dig);
-                return GetListADigit(digits, n - (dig * pow));
-            }
+
+        private string swap(String a, int i, int j)
+        {
+            char temp;
+            char[] charArray = a.ToCharArray();
+            temp = charArray[i];
+            charArray[i] = charArray[j];
+            charArray[j] = temp;
+            return new string(charArray);
         }
-
-        public List<int> GetPermutationsOfANumber(int n) {
-            List<int> allDigits = new List<int>();
-            List<int> result = new List<int>();
-
-            GetListADigit(allDigits, n);
-            
-
-            return result;
-        }
-       
 
     }
 }

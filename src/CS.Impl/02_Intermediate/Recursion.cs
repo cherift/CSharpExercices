@@ -45,23 +45,22 @@ namespace CS.Impl._02_Intermediate
 
         public bool IsPrime(int n)
         {
-            if (n == 0)
-            {
-                return false;
-            }
-            if (n == 1)
-            {
-                return true;
-            }
-            else {
-                return true && IsPrime(n % 2);
-            }
-
+            return IsPrime(n, 2);
         }
 
         private bool IsPrime(int n, int current)
         {
-            throw new NotImplementedException();
+            if (current == 1)
+            {
+                return true;
+            }
+            else
+            {
+                if (n % current == 0)
+                    return false;
+                else
+                    return IsPrime(n, current - 1);
+            }
         }
 
         public bool IsPalindrome(string text)
